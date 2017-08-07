@@ -54,6 +54,7 @@
 /* USER CODE BEGIN Includes */     
 #include "myled.h"
 #include "mytask.h"
+#include "lwip.h"
 /* USER CODE END Includes */
 
 /* Variables -----------------------------------------------------------------*/
@@ -113,6 +114,8 @@ void StartDefaultTask(void const * argument)
 {
 
   /* USER CODE BEGIN StartDefaultTask */
+  
+   MX_LWIP_Init();
   /* Infinite loop */
   for(;;)
   {

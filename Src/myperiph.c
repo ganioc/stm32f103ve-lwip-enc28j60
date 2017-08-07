@@ -4,6 +4,7 @@
 #include "spi.h"
 #include "myusart.h"
 #include "myled.h"
+#include "myspi.h"
 
 void Periph_Init(){
 
@@ -18,7 +19,7 @@ void Periph_Init(){
   */
   My_Usart_Init();
 
-  MX_SPI1_Init();
-
+  //MX_SPI1_Init();
+  //My_Spi_Init();
 
 }

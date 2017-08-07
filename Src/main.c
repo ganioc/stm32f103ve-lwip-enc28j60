@@ -101,16 +101,22 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-//  MX_GPIO_Init();
-//  MX_UART4_Init();
-//  MX_USART1_UART_Init();
-//  MX_USART2_UART_Init();
-//  MX_USART3_UART_Init();
-//  MX_SPI1_Init();
+
 
   /* USER CODE BEGIN 2 */
-Periph_Init();
+  Periph_Init();
   /* USER CODE END 2 */
+
+    printf("\n|==================================================\n|\n");
+    printf("|             _____        __  __ _       \n");
+    printf("|            |  __ \\      / _|/ _(_)      \n");
+    printf("|            | |__) |   _| |_| |_ _  ___  \n");
+    printf("|            |  _  / | | |  _|  _| |/ _ \\ \n");
+    printf("|            | | \\ \\ |_| | | | |_| | (_) |\n");
+    printf("|            |_|  \\_\\__,_|_| |_(_)_|\\___/ \n");
+    printf("|\n|\n| Serial-Proxy\n");
+    printf("| 2017.7\n");
+    printf("==================================================\n\n");
 
   /* Call init function for freertos objects (in freertos.c) */
   MX_FREERTOS_Init();

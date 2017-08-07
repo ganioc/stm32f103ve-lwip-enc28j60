@@ -58,7 +58,7 @@
 /*#define HAL_CRC_MODULE_ENABLED   */
 /*#define HAL_DAC_MODULE_ENABLED   */
 /*#define HAL_DMA_MODULE_ENABLED   */
-/*#define HAL_ETH_MODULE_ENABLED   */
+#define HAL_ETH_MODULE_ENABLED   
 /*#define HAL_FLASH_MODULE_ENABLED   */
 #define HAL_GPIO_MODULE_ENABLED
 /*#define HAL_I2C_MODULE_ENABLED   */
@@ -151,10 +151,10 @@
 /* MAC ADDRESS: MAC_ADDR0:MAC_ADDR1:MAC_ADDR2:MAC_ADDR3:MAC_ADDR4:MAC_ADDR5 */
 #define MAC_ADDR0   2
 #define MAC_ADDR1   0
-#define MAC_ADDR2   0
-#define MAC_ADDR3   0
-#define MAC_ADDR4   0
-#define MAC_ADDR5   0
+#define MAC_ADDR2   1
+#define MAC_ADDR3   2
+#define MAC_ADDR4   3
+#define MAC_ADDR5   4
 
 /* Definition of the Ethernet driver buffers size and count */   
 #define ETH_RX_BUF_SIZE                ETH_MAX_PACKET_SIZE /* buffer size for receive               */

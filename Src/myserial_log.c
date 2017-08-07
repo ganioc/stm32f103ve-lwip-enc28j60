@@ -106,16 +106,7 @@ void Serial_Log_MspDeInit()
 
 void StartLogTask(void const * argument)
 {
-        printf("\n|==================================================\n|\n");
-    printf("|             _____        __  __ _       \n");
-    printf("|            |  __ \\      / _|/ _(_)      \n");
-    printf("|            | |__) |   _| |_| |_ _  ___  \n");
-    printf("|            |  _  / | | |  _|  _| |/ _ \\ \n");
-    printf("|            | | \\ \\ |_| | | | |_| | (_) |\n");
-    printf("|            |_|  \\_\\__,_|_| |_(_)_|\\___/ \n");
-    printf("|\n|\n| Serial-Proxy\n");
-    printf("| 2017.7\n");
-    printf("==================================================\n\n");
+
 
     
     UART_Log_receive();

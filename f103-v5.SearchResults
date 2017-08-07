@@ -1,0 +1,29 @@
+---- IP_ADDR1 Matches (7 in 3 files) ----
+App_ethernet.c (src):66
+    sprintf((char*)iptxt, "%d.%d.%d.%d", IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
+
+    printf ("Static IP address: %s\n", iptxt);
+App_ethernet.c (src):112
+    IP4_ADDR(&ipaddr, IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
+    IP4_ADDR(&netmask, NETMASK_ADDR0, NETMASK_ADDR1 , NETMASK_ADDR2, NETMASK_ADDR3);
+    IP4_ADDR(&gw, GW_ADDR0, GW_ADDR1, GW_ADDR2, GW_ADDR3);
+App_ethernet.c (src):119
+    sprintf((char*)iptxt, "%d.%d.%d.%d", IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
+    printf ("The network cable is now connected \n");
+    printf ("Static IP address: %s\n", iptxt);
+App_ethernet.c (src):220
+            IP4_ADDR(&ipaddr, IP_ADDR0 ,IP_ADDR1 , IP_ADDR2 , IP_ADDR3 );
+            IP4_ADDR(&netmask, NETMASK_ADDR0, NETMASK_ADDR1, NETMASK_ADDR2, NETMASK_ADDR3);
+            IP4_ADDR(&gw, GW_ADDR0, GW_ADDR1, GW_ADDR2, GW_ADDR3);
+App_ethernet.c (src):228
+          sprintf((char*)iptxt, "%d.%d.%d.%d", IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
+          printf ("DHCP timeout !!\n");
+          printf ("Static IP address  : %s\n", iptxt);
+Lwip.c (src):128
+    IP4_ADDR(&ipaddr, IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
+    IP4_ADDR(&netmask, NETMASK_ADDR0, NETMASK_ADDR1, NETMASK_ADDR2,
+             NETMASK_ADDR3);
+Lwip.h (inc):82
+#define IP_ADDR1   168
+#define IP_ADDR2   1
+#define IP_ADDR3   50
