@@ -201,7 +201,7 @@ void dhcp_do(struct netif *netif)
 
         sprintf((char*)iptxt, "%d.%d.%d.%d", iptab[3], iptab[2], iptab[1], iptab[0]);
 
-        printf ("IP address assigned by a DHCP\nserver: %s\n", iptxt);
+        printf ("IP address assigned by a DHCP server: %s\n", iptxt);
 
      LED3_On();
 #endif

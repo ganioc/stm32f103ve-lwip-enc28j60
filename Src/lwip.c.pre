@@ -53,6 +53,7 @@
 #include "lwip/netif.h"
 
 /* USER CODE BEGIN 0 */
+#include "app_ethernet.h"
 
 /* USER CODE END 0 */
 
@@ -60,7 +61,7 @@
 void _Error_Handler(char * file, int line);
 
 /* USER CODE BEGIN 1 */
-
+static void Netif_Config(void);
 /* USER CODE END 1 */
 
 /* Variables Initialization */
@@ -97,11 +98,26 @@ void MX_LWIP_Init(void)
     printf("tcpip_init()\n");
 
     printf("netif_config()\n");
-      /* Initilaize the LwIP stack */
-  Netif_Config();
+    /* Initilaize the LwIP stack */
+    Netif_Config();
 
+
+    // add http server here
+
+
+  /* Notify user about the netwoek interface config */
+  User_notification(&gnetif);
     
     /* USER CODE BEGIN 3 */
+    #ifdef USE_DHCP
+  /* Start DHCPClient */
+
+  osThreadDef(DHCP, DHCP_thread, osPriorityBelowNormal, 0, configMINIMAL_STACK_SIZE * 2);
+
+
+  osThreadCreate (osThread(DHCP), &gnetif);
+#endif
+    
 
     /* USER CODE END 3 */
 }
@@ -114,62 +130,67 @@ void MX_LWIP_Init(void)
   */
 static void Netif_Config(void)
 {
-  struct ip_addr ipaddr;
-  struct ip_addr netmask;
-  struct ip_addr gw;
+    struct ip_addr ipaddr;
+    struct ip_addr netmask;
+    struct ip_addr gw;
 
-  /* IP address setting */
-  IP4_ADDR(&ipaddr, IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
-  IP4_ADDR(&netmask, NETMASK_ADDR0, NETMASK_ADDR1 , NETMASK_ADDR2, 
-NETMASK_ADDR3);
-  IP4_ADDR(&gw, GW_ADDR0, GW_ADDR1, GW_ADDR2, GW_ADDR3);
+    /* IP address setting */
+    IP4_ADDR(&ipaddr, IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
+    IP4_ADDR(&netmask, NETMASK_ADDR0, NETMASK_ADDR1, NETMASK_ADDR2,
+             NETMASK_ADDR3);
+    IP4_ADDR(&gw, GW_ADDR0, GW_ADDR1, GW_ADDR2, GW_ADDR3);
 
-  /* create a binary semaphore used for informing ethernetif of frame 
-reception */
-  osSemaphoreDef(Netif_SEM);
-  Netif_IRQSemaphore = osSemaphoreCreate(osSemaphore(Netif_SEM) , 1);
+    /* create a binary semaphore used for informing ethernetif of frame
+    reception */
+    osSemaphoreDef(Netif_SEM);
+    Netif_IRQSemaphore = osSemaphoreCreate(osSemaphore(Netif_SEM), 1);
 
-  /* - netif_add(struct netif *netif, struct ip_addr *ipaddr,
-  struct ip_addr *netmask, struct ip_addr *gw,
-  void *state, err_t (* init)(struct netif *netif),
-  err_t (* input)(struct pbuf *p, struct netif *netif))
+    /* - netif_add(struct netif *netif, struct ip_addr *ipaddr,
+    struct ip_addr *netmask, struct ip_addr *gw,
+    void *state, err_t (* init)(struct netif *netif),
+    err_t (* input)(struct pbuf *p, struct netif *netif))
 
-  Adds your network interface to the netif_list. Allocate a struct
-  netif and pass a pointer to this structure as the first argument.
-  Give pointers to cleared ip_addr structures when using DHCP,
-  or fill them with sane numbers otherwise. The state pointer may be NULL.
+    Adds your network interface to the netif_list. Allocate a struct
+    netif and pass a pointer to this structure as the first argument.
+    Give pointers to cleared ip_addr structures when using DHCP,
+    or fill them with sane numbers otherwise. The state pointer may be NULL.
 
-  The init function pointer must point to a initialization function for
-  your ethernet netif interface. The following code illustrates it's use.*/
+    The init function pointer must point to a initialization function for
+    your ethernet netif interface. The following code illustrates it's use.*/
 
-  netif_add(&gnetif, &ipaddr, &netmask, &gw, NULL, &ethernetif_init, &tcpip_input);
+    netif_add(&gnetif, &ipaddr, &netmask, &gw, NULL, &ethernetif_init, &tcpip_input);
 
-  /*  Registers the default network interface. */
-  netif_set_default(&gnetif);
+    /*  Registers the default network interface. */
+    netif_set_default(&gnetif);
 
-  if (netif_is_link_up(&gnetif))
-  {
-    /* When the netif is fully configured this function must be called.*/
-    netif_set_up(&gnetif);
-  }
-  else
-  {
-    /* When the netif link is down this function must be called */
-    netif_set_down(&gnetif);
-  }
+    if(netif_is_link_up(&gnetif))
+    {
+        /* When the netif is fully configured this function must be called.*/
+        netif_set_up(&gnetif);
+    }
+    else
+    {
+        /* When the netif link is down this function must be called */
+        netif_set_down(&gnetif);
+    }
 
-  /* Set the link callback function, this function is called on change of 
-link status*/
-  netif_set_link_callback(&gnetif, ethernetif_update_config);
+    /* Set the link callback function, this function is called on change of
+    link status*/
+    netif_set_link_callback(&gnetif, ethernetif_update_config);
 
-  irq_arg.netif = &gnetif;
-  irq_arg.semaphore = Netif_IRQSemaphore;
-  
-  /* Create the Ethernet IRQ handler thread */
-  osThreadDef(IrqThr, ethernetif_process_irq, osPriorityRealtime, 0, configMINIMAL_STACK_SIZE * 2);
+    irq_arg.netif = &gnetif;
+    irq_arg.semaphore = Netif_IRQSemaphore;
 
-  osThreadCreate (osThread(IrqThr), &irq_arg);
+    /* Create the Ethernet IRQ handler thread */
+    osThreadDef(IrqThr, ethernetif_process_irq, osPriorityRealtime, 0, configMINIMAL_STACK_SIZE * 2);
+
+    osThreadCreate(osThread(IrqThr), &irq_arg);
 }
+
+
+
+
+
 
 /* USER CODE END 4 */
 

@@ -106,20 +106,21 @@
 #define DEFAULT_THREAD_PRIO 3
 /*----- Value in opt.h for LWIP_STATS: 1 -----*/
 #define LWIP_STATS 0
+
 /*----- Value in opt.h for CHECKSUM_GEN_IP: 1 -----*/
-#define CHECKSUM_GEN_IP 0
+#define CHECKSUM_GEN_IP 1
 /*----- Value in opt.h for CHECKSUM_GEN_UDP: 1 -----*/
-#define CHECKSUM_GEN_UDP 0
+#define CHECKSUM_GEN_UDP 1
 /*----- Value in opt.h for CHECKSUM_GEN_TCP: 1 -----*/
-#define CHECKSUM_GEN_TCP 0
+#define CHECKSUM_GEN_TCP 1
 /*----- Value in opt.h for CHECKSUM_GEN_ICMP: 1 -----*/
-#define CHECKSUM_GEN_ICMP 0
+#define CHECKSUM_GEN_ICMP 1
 /*----- Value in opt.h for CHECKSUM_CHECK_IP: 1 -----*/
-#define CHECKSUM_CHECK_IP 0
+#define CHECKSUM_CHECK_IP 1
 /*----- Value in opt.h for CHECKSUM_CHECK_UDP: 1 -----*/
-#define CHECKSUM_CHECK_UDP 0
+#define CHECKSUM_CHECK_UDP 1
 /*----- Value in opt.h for CHECKSUM_CHECK_TCP: 1 -----*/
-#define CHECKSUM_CHECK_TCP 0
+#define CHECKSUM_CHECK_TCP 1
 /*-----------------------------------------------------------------------------*/
 /* Parameter(s) not set in STM32CubeMX LwIP Configuration GUI -*/
 /* LwIP Parameter(s) not in opt.h -----------------------------*/
@@ -136,6 +137,20 @@
 #define USE_LCD 
 // printf log
 
+#define LWIP_DEBUG 1
+
+#define LWIP_ICMP 1
+#define ICMP_DEBUG LWIP_DBG_ON
+
+#define LWIP_DEBUG 1
+
+#define LWIP_ARP 1
+#define ETHARP_DEBUG LWIP_DBG_ON
+
+#define LWIP_TCP 1
+#define TCP_TTL 255
+#define LWIP_UDP 1
+#define UDP_TTL 255
 
 #ifdef __cplusplus
 }

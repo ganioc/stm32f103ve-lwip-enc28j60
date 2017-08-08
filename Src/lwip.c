@@ -105,19 +105,19 @@ void MX_LWIP_Init(void)
     // add http server here
 
 
-  /* Notify user about the netwoek interface config */
-  User_notification(&gnetif);
-    
+    /* Notify user about the netwoek interface config */
+    User_notification(&gnetif);
+
     /* USER CODE BEGIN 3 */
-    #ifdef USE_DHCP
-  /* Start DHCPClient */
+#ifdef USE_DHCP
+    /* Start DHCPClient */
 
-  osThreadDef(DHCP, DHCP_thread, osPriorityBelowNormal, 0, configMINIMAL_STACK_SIZE * 2);
+    osThreadDef(DHCP, DHCP_thread, osPriorityBelowNormal, 0, configMINIMAL_STACK_SIZE * 2);
 
 
-  osThreadCreate (osThread(DHCP), &gnetif);
+    osThreadCreate(osThread(DHCP), &gnetif);
 #endif
-    
+
 
     /* USER CODE END 3 */
 }
