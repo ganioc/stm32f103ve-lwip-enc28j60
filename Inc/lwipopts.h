@@ -145,7 +145,7 @@
 #define LWIP_DEBUG 1
 
 #define LWIP_ARP 1
-#define ETHARP_DEBUG LWIP_DBG_ON
+//#define ETHARP_DEBUG LWIP_DBG_ON
 
 #define LWIP_TCP 1
 #define TCP_TTL 255

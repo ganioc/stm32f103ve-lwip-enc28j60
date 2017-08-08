@@ -105,6 +105,9 @@ void MX_LWIP_Init(void)
     // add http server here
 
 
+    // add tcp server here
+    tcp_server_init();
+
     /* Notify user about the netwoek interface config */
     User_notification(&gnetif);
 
