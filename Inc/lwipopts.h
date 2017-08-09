@@ -152,6 +152,9 @@
 #define LWIP_UDP 1
 #define UDP_TTL 255
 
+// enable netconn
+#define LWIP_NETCONN  1
+
 #ifdef __cplusplus
 }
 #endif

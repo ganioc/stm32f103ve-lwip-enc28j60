@@ -54,6 +54,8 @@
 
 /* USER CODE BEGIN 0 */
 #include "app_ethernet.h"
+#include "myhttpd.h"
+#include "mytcp.h"
 
 /* USER CODE END 0 */
 
@@ -102,11 +104,13 @@ void MX_LWIP_Init(void)
     Netif_Config();
 
 
-    // add http server here
-
 
     // add tcp server here
     tcp_server_init();
+
+    // add http server here
+    http_server_netconn_init();
+
 
     /* Notify user about the netwoek interface config */
     User_notification(&gnetif);
