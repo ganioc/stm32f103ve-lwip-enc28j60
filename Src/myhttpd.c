@@ -173,6 +173,7 @@ void http_server_serve(struct netconn *conn)
 
       /* Is this an HTTP GET command? (only check the first 5 chars, since
       there are other formats for GET, and we're keeping it very simple )*/
+      
         printf("\nhttp input:%s\n", buf);
         printf("--end\n");
       

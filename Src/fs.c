@@ -54,7 +54,7 @@
 #endif
 
 
-extern  struct fsdata_file *file__STM32F4xx_html;
+extern  struct fsdata_file file__STM32F4xx_html;
 //struct fsdata_file * FS_ROOT = file__STM32F4xx_html;
 
 
@@ -109,7 +109,7 @@ fs_open(const char *name)
   const struct fsdata_file *f;
   int i=0;
 
-  f = (const struct fsdata_file *)file__STM32F4xx_html;
+  f = (const struct fsdata_file *)&file__STM32F4xx_html;
 
   printf("1st name:%s\n", f->name);
 
@@ -126,7 +126,8 @@ fs_open(const char *name)
   file->is_custom_file = 0;
 #endif /* LWIP_HTTPD_CUSTOM_FILES */
 
-  for(f; f != NULL; f = f->next) {
+  //for(f; f != NULL; f = f->next) {
+  while(1){
     printf("url %d:%s:%d\n", ++i, f->name, f->len);
     
     if (!strcmp(name, (char *)f->name)) {
@@ -145,6 +146,12 @@ fs_open(const char *name)
 #endif /* #if LWIP_HTTPD_FILE_STATE */
       return file;
     }
+    if(f->next == NULL){
+        break;
+    }else{
+        f = f->next;
+    }
+    
   }
 
   printf("Can\'t find url %s",name);
