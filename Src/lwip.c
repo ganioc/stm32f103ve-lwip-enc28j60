@@ -118,9 +118,7 @@ void MX_LWIP_Init(void)
     /* USER CODE BEGIN 3 */
 #ifdef USE_DHCP
     /* Start DHCPClient */
-
     osThreadDef(DHCP, DHCP_thread, osPriorityBelowNormal, 0, configMINIMAL_STACK_SIZE * 2);
-
 
     osThreadCreate(osThread(DHCP), &gnetif);
 #endif
