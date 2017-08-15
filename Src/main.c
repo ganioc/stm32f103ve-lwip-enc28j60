@@ -107,16 +107,7 @@ int main(void)
   Periph_Init();
   /* USER CODE END 2 */
 
-    printf("\n|==================================================\n|\n");
-    printf("|             _____        __  __ _       \n");
-    printf("|            |  __ \\      / _|/ _(_)      \n");
-    printf("|            | |__) |   _| |_| |_ _  ___  \n");
-    printf("|            |  _  / | | |  _|  _| |/ _ \\ \n");
-    printf("|            | | \\ \\ |_| | | | |_| | (_) |\n");
-    printf("|            |_|  \\_\\__,_|_| |_(_)_|\\___/ \n");
-    printf("|\n|\n| Serial-Proxy\n");
-    printf("| 2017.7\n");
-    printf("==================================================\n\n");
+
 
   /* Call init function for freertos objects (in freertos.c) */
   MX_FREERTOS_Init();

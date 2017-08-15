@@ -106,9 +106,6 @@ void Serial_Log_MspDeInit()
 
 void StartLogTask(void const * argument)
 {
-
-
-    
     UART_Log_receive();
 
     for(;;)

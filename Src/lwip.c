@@ -139,6 +139,7 @@ static void Netif_Config(void)
     struct ip_addr netmask;
     struct ip_addr gw;
 
+    // get static ip address from e2prom
     /* IP address setting */
     IP4_ADDR(&ipaddr, IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
     IP4_ADDR(&netmask, NETMASK_ADDR0, NETMASK_ADDR1, NETMASK_ADDR2,

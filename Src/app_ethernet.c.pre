@@ -45,6 +45,8 @@
 __IO uint8_t DHCP_state;
 #endif
 
+uint8_t IP_ADDRESS[4];
+
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 /**
@@ -54,36 +56,36 @@ __IO uint8_t DHCP_state;
   */
 void User_notification(struct netif *netif)
 {
-  if (netif_is_up(netif))
- {
+    if(netif_is_up(netif))
+    {
 #ifdef USE_DHCP
-    /* Update DHCP state machine */
-    DHCP_state = DHCP_START;
+        /* Update DHCP state machine */
+        DHCP_state = DHCP_START;
 #else
 
-    uint8_t iptxt[20];
+        uint8_t iptxt[20];
 
-    sprintf((char*)iptxt, "%d.%d.%d.%d", IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
+        sprintf((char*)iptxt, "%d.%d.%d.%d", IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
 
-    printf ("Static IP address: %s\n", iptxt);
+        printf("Static IP address: %s\n", iptxt);
 
-    /* Turn On LED 3 to indicate ETH and LwIP init success*/
-    LED3_On();
+        /* Turn On LED 3 to indicate ETH and LwIP init success*/
+        LED3_On();
 #endif /* USE_DHCP */
- }
- else
-  {
+    }
+    else
+    {
 #ifdef USE_DHCP
-    /* Update DHCP state machine */
-    DHCP_state = DHCP_LINK_DOWN;
+        /* Update DHCP state machine */
+        DHCP_state = DHCP_LINK_DOWN;
 #endif  /* USE_DHCP */
 
-   printf("The network cable is not connected \n");
+        printf("The network cable is not connected \n");
 
-    /* Turn On LED 4 to indicate ETH and LwIP init error */
-    LED4_On();
- /* USE_LCD */
-  }
+        /* Turn On LED 4 to indicate ETH and LwIP init error */
+        LED4_On();
+        /* USE_LCD */
+    }
 }
 
 /**
@@ -93,60 +95,60 @@ void User_notification(struct netif *netif)
   */
 void ethernetif_notify_conn_changed(struct netif *netif)
 {
-  struct ip_addr ipaddr;
-  struct ip_addr netmask;
-  struct ip_addr gw;
+    struct ip_addr ipaddr;
+    struct ip_addr netmask;
+    struct ip_addr gw;
 
-  if(netif_is_link_up(netif))
-  {
+    if(netif_is_link_up(netif))
+    {
 #ifdef USE_DHCP
 #ifdef USE_LCD
-    printf ("The network cable is now connected \n");
+        printf("The network cable is now connected \n");
 
-    LED3_Off();
-    LED4_On();
+        LED3_Off();
+        LED4_On();
 #endif /* USE_LCD */
-    /* Update DHCP state machine */
-    DHCP_state = DHCP_START;
+        /* Update DHCP state machine */
+        DHCP_state = DHCP_START;
 #else
-    IP4_ADDR(&ipaddr, IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
-    IP4_ADDR(&netmask, NETMASK_ADDR0, NETMASK_ADDR1 , NETMASK_ADDR2, NETMASK_ADDR3);
-    IP4_ADDR(&gw, GW_ADDR0, GW_ADDR1, GW_ADDR2, GW_ADDR3);
+        IP4_ADDR(&ipaddr, IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
+        IP4_ADDR(&netmask, NETMASK_ADDR0, NETMASK_ADDR1, NETMASK_ADDR2, NETMASK_ADDR3);
+        IP4_ADDR(&gw, GW_ADDR0, GW_ADDR1, GW_ADDR2, GW_ADDR3);
 
 #ifdef USE_LCD
-    uint8_t iptxt[20];
+        uint8_t iptxt[20];
 
-    sprintf((char*)iptxt, "%d.%d.%d.%d", IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
-    printf ("The network cable is now connected \n");
-    printf ("Static IP address: %s\n", iptxt);
+        sprintf((char*)iptxt, "%d.%d.%d.%d", IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
+        printf("The network cable is now connected \n");
+        printf("Static IP address: %s\n", iptxt);
 
-    LED4_Off();
-    LED3_On();
+        LED4_Off();
+        LED3_On();
 #endif /* USE_LCD */
 #endif /* USE_DHCP */
 
-    netif_set_addr(netif, &ipaddr , &netmask, &gw);
+        netif_set_addr(netif, &ipaddr, &netmask, &gw);
 
-    /* When the netif is fully configured this function must be called.*/
-    netif_set_up(netif);
-  }
-  else
-  {
+        /* When the netif is fully configured this function must be called.*/
+        netif_set_up(netif);
+    }
+    else
+    {
 #ifdef USE_DHCP
-    /* Update DHCP state machine */
-    DHCP_state = DHCP_LINK_DOWN;
+        /* Update DHCP state machine */
+        DHCP_state = DHCP_LINK_DOWN;
 #endif /* USE_DHCP */
 
-    /*  When the netif link is down this function must be called.*/
-    netif_set_down(netif);
+        /*  When the netif link is down this function must be called.*/
+        netif_set_down(netif);
 
 #ifdef USE_LCD
-    printf ("The network cable is not connected \n");
+        printf("The network cable is not connected \n");
 
-    LED3_Off();
-    LED4_On();
+        LED3_Off();
+        LED4_On();
 #endif /* USE_LCD */
-  }
+    }
 }
 
 #ifdef USE_DHCP
@@ -162,81 +164,91 @@ void dhcp_do(struct netif *netif)
     struct ip_addr gw;
     uint32_t IPaddress;
 
-    switch (DHCP_state)
+    switch(DHCP_state)
     {
-    case DHCP_START:
-      {
-        netif->ip_addr.addr = 0;
-        netif->netmask.addr = 0;
-        netif->gw.addr = 0;
-        IPaddress = 0;
-        dhcp_start(netif);
-        DHCP_state = DHCP_WAIT_ADDRESS;
-#ifdef USE_LCD
-      printf ("State: Looking for DHCP server ...\n");
-#endif
-      }
-      break;
-
-    case DHCP_WAIT_ADDRESS:
-      {
-        /* Read the new IP address */
-        IPaddress = netif->ip_addr.addr;
-
-        if (IPaddress!=0)
+        case DHCP_START:
         {
-          DHCP_state = DHCP_ADDRESS_ASSIGNED;
-
-          /* Stop DHCP */
-          dhcp_stop(netif);
-
+            netif->ip_addr.addr = 0;
+            netif->netmask.addr = 0;
+            netif->gw.addr = 0;
+            IPaddress = 0;
+            dhcp_start(netif);
+            DHCP_state = DHCP_WAIT_ADDRESS;
 #ifdef USE_LCD
-        uint8_t iptab[4];
-        uint8_t iptxt[20];
-
-        iptab[0] = (uint8_t)(IPaddress >> 24);
-        iptab[1] = (uint8_t)(IPaddress >> 16);
-        iptab[2] = (uint8_t)(IPaddress >> 8);
-        iptab[3] = (uint8_t)(IPaddress);
-
-        sprintf((char*)iptxt, "%d.%d.%d.%d", iptab[3], iptab[2], iptab[1], iptab[0]);
-
-        printf ("IP address assigned by a DHCP server: %s\n", iptxt);
-
-     LED3_On();
+            printf("State: Looking for DHCP server ...\n");
 #endif
         }
-        else
+        break;
+
+        case DHCP_WAIT_ADDRESS:
         {
-          /* DHCP timeout */
-          if (netif->dhcp->tries > MAX_DHCP_TRIES)
-          {
-            DHCP_state = DHCP_TIMEOUT;
+            /* Read the new IP address */
+            IPaddress = netif->ip_addr.addr;
 
-            /* Stop DHCP */
-            dhcp_stop(netif);
+            if(IPaddress!=0)
+            {
+                DHCP_state = DHCP_ADDRESS_ASSIGNED;
 
-            /* Static address used */
-            IP4_ADDR(&ipaddr, IP_ADDR0 ,IP_ADDR1 , IP_ADDR2 , IP_ADDR3 );
-            IP4_ADDR(&netmask, NETMASK_ADDR0, NETMASK_ADDR1, NETMASK_ADDR2, NETMASK_ADDR3);
-            IP4_ADDR(&gw, GW_ADDR0, GW_ADDR1, GW_ADDR2, GW_ADDR3);
-            netif_set_addr(netif, &ipaddr , &netmask, &gw);
+                /* Stop DHCP */
+                dhcp_stop(netif);
 
 #ifdef USE_LCD
-          uint8_t iptxt[20];
+                uint8_t iptab[4];
+                uint8_t iptxt[20];
 
-          sprintf((char*)iptxt, "%d.%d.%d.%d", IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
-          printf ("DHCP timeout !!\n");
-          printf ("Static IP address  : %s\n", iptxt);
+                iptab[0] = (uint8_t)(IPaddress >> 24);
+                iptab[1] = (uint8_t)(IPaddress >> 16);
+                iptab[2] = (uint8_t)(IPaddress >> 8);
+                iptab[3] = (uint8_t)(IPaddress);
 
-     LED4_On();
+                sprintf((char*)iptxt, "%d.%d.%d.%d", iptab[3], iptab[2], iptab[1], iptab[0]);
+
+                printf("IP address assigned by a DHCP server: %s\n", iptxt);
+                IP_ADDRESS[0] = iptab[3];
+                IP_ADDRESS[1] = iptab[2];
+                IP_ADDRESS[2] = iptab[1];
+                IP_ADDRESS[3] = iptab[0];
+
+                LED3_On();
 #endif
-          }
-        }
-      }
-      break;
+            }
+            else
+            {
+                /* DHCP timeout */
+                if(netif->dhcp->tries > MAX_DHCP_TRIES)
+                {
+                    DHCP_state = DHCP_TIMEOUT;
 
-    default: break;
+                    /* Stop DHCP */
+                    dhcp_stop(netif);
+
+                    /* Static address used */
+                    IP4_ADDR(&ipaddr, IP_ADDR0,IP_ADDR1, IP_ADDR2, IP_ADDR3);
+                    IP4_ADDR(&netmask, NETMASK_ADDR0, NETMASK_ADDR1, NETMASK_ADDR2, NETMASK_ADDR3);
+                    IP4_ADDR(&gw, GW_ADDR0, GW_ADDR1, GW_ADDR2, GW_ADDR3);
+                    netif_set_addr(netif, &ipaddr, &netmask, &gw);
+
+#ifdef USE_LCD
+                    uint8_t iptxt[20];
+
+                    sprintf((char*)iptxt, "%d.%d.%d.%d", IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
+                    printf("DHCP timeout !!\n");
+                    printf("Static IP address  : %s\n", iptxt);
+
+                                    IP_ADDRESS[0] =IP_ADDR0;
+                IP_ADDRESS[1] =IP_ADDR1;
+                IP_ADDRESS[2] = IP_ADDR2;
+                IP_ADDRESS[3] = IP_ADDR3;
+
+                    LED4_On();
+#endif
+                }
+            }
+        }
+        break;
+
+        default:
+            break;
     }
 }
 
@@ -247,12 +259,12 @@ void dhcp_do(struct netif *netif)
   */
 void DHCP_thread(void const * argument)
 {
-  for (;;)
-  {
-      tcpip_callback((tcpip_callback_fn) dhcp_do, (void *) argument);
-      /* wait 250 ms */
-      osDelay(250);
-  }
+    for(;;)
+    {
+        tcpip_callback((tcpip_callback_fn) dhcp_do, (void *) argument);
+        /* wait 250 ms */
+        osDelay(250);
+    }
 }
 #endif  /* USE_DHCP */
 

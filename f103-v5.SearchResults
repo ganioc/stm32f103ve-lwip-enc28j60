@@ -1,9 +1,82 @@
----- FS_ROOT Matches (2 in 2 files) ----
-Fs.c (src):121
-  for(f = FS_ROOT; f != NULL; f = f->next) {
-    if (!strcmp(name, (char *)f->name)) {
-      file->data = (const char *)f->data;
-Fsdata.h (inc):39
-//#define FS_ROOT file__STM32F4xx_html
-//#define FS_NUMFILES 5
+---- sprintf Matches (18 in 5 files) ----
+App_ethernet.c (src):66
+        sprintf((char*)iptxt, "%d.%d.%d.%d", IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
 
+        printf("Static IP address: %s\n", iptxt);
+App_ethernet.c (src):119
+        sprintf((char*)iptxt, "%d.%d.%d.%d", IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
+        printf("The network cable is now connected \n");
+        printf("Static IP address: %s\n", iptxt);
+App_ethernet.c (src):202
+                sprintf((char*)iptxt, "%d.%d.%d.%d", iptab[3], iptab[2], iptab[1], iptab[0]);
+
+                printf("IP address assigned by a DHCP server: %s\n", iptxt);
+App_ethernet.c (src):228
+                    sprintf((char*)iptxt, "%d.%d.%d.%d", IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
+                    printf("DHCP timeout !!\n");
+                    printf("Static IP address  : %s\n", iptxt);
+Mye2prom.c (src):150
+    sprintf(pSysInfo->modelName, "%s",DEFAULT_MODEL_NAME );
+
+}
+Myhttpd.c (src):324
+  sprintf(pagehits, "%d", (int)nPageHits);
+  strcat(PAGE_BODY, pagehits);
+  strcat((char *)PAGE_BODY, "<pre><br>Name          State  Priority  Stack   Num" );
+Task.h (middlewares\third_party\freertos\source\include):1274
+						sprintf( pcWriteBuffer, "%s\t\t%lu\t\t%lu%%\r\n", pxTaskStatusArray[ x ].pcTaskName, pxTaskStatusArray[ x ].ulRunTimeCounter, ulStatsAsPercentage );
+					}
+					else
+Task.h (middlewares\third_party\freertos\source\include):1280
+						sprintf( pcWriteBuffer, "%s\t\t%lu\t\t<1%%\r\n", pxTaskStatusArray[ x ].pcTaskName, pxTaskStatusArray[ x ].ulRunTimeCounter );
+					}
+
+Task.h (middlewares\third_party\freertos\source\include):1321
+ * vTaskList() has a dependency on the sprintf() C library function that might
+ * bloat the code size, use a lot of stack, and provide different results on
+ * different platforms.  An alternative, tiny, third party, and limited
+ * functionality implementation of sprintf() is provided in many of the
+ * FreeRTOS/Demo sub-directories in a file called printf-stdarg.c (note
+ * printf-stdarg.c does not provide a full snprintf() implementation!).
+Task.h (middlewares\third_party\freertos\source\include):1375
+ * vTaskGetRunTimeStats() has a dependency on the sprintf() C library function
+ * that might bloat the code size, use a lot of stack, and provide different
+ * results on different platforms.  An alternative, tiny, third party, and
+ * limited functionality implementation of sprintf() is provided in many of the
+ * FreeRTOS/Demo sub-directories in a file called printf-stdarg.c (note
+ * printf-stdarg.c does not provide a full snprintf() implementation!).
+Tasks.c (middlewares\third_party\freertos\source):3671
+		 * vTaskList() has a dependency on the sprintf() C library function that
+		 * might bloat the code size, use a lot of stack, and provide different
+		 * results on different platforms.  An alternative, tiny, third party,
+		 * and limited functionality implementation of sprintf() is provided in
+		 * many of the FreeRTOS/Demo sub-directories in a file called
+		 * printf-stdarg.c (note printf-stdarg.c does not provide a full
+Tasks.c (middlewares\third_party\freertos\source):3728
+				sprintf( pcWriteBuffer, "\t%c\t%u\t%u\t%u\r\n", cStatus, ( unsigned int ) pxTaskStatusArray[ x ].uxCurrentPriority, ( unsigned int ) pxTaskStatusArray[ x ].usStackHighWaterMark, ( unsigned int ) pxTaskStatusArray[ x ].xTaskNumber );
+				pcWriteBuffer += strlen( pcWriteBuffer );
+			}
+Tasks.c (middlewares\third_party\freertos\source):3770
+		 * vTaskGetRunTimeStats() has a dependency on the sprintf() C library
+		 * function that might bloat the code size, use a lot of stack, and
+		 * provide different results on different platforms.  An alternative,
+Tasks.c (middlewares\third_party\freertos\source):3774
+		 * sprintf() is provided in many of the FreeRTOS/Demo sub-directories in
+		 * a file called printf-stdarg.c (note printf-stdarg.c does not provide
+		 * a full snprintf() implementation!).
+Tasks.c (middlewares\third_party\freertos\source):3821
+							sprintf( pcWriteBuffer, "\t%lu\t\t%lu%%\r\n", pxTaskStatusArray[ x ].ulRunTimeCounter, ulStatsAsPercentage );
+						}
+						#else
+Tasks.c (middlewares\third_party\freertos\source):3827
+							sprintf( pcWriteBuffer, "\t%u\t\t%u%%\r\n", ( unsigned int ) pxTaskStatusArray[ x ].ulRunTimeCounter, ( unsigned int ) ulStatsAsPercentage );
+						}
+						#endif
+Tasks.c (middlewares\third_party\freertos\source):3837
+							sprintf( pcWriteBuffer, "\t%lu\t\t<1%%\r\n", pxTaskStatusArray[ x ].ulRunTimeCounter );
+						}
+						#else
+Tasks.c (middlewares\third_party\freertos\source):3843
+							sprintf( pcWriteBuffer, "\t%u\t\t<1%%\r\n", ( unsigned int ) pxTaskStatusArray[ x ].ulRunTimeCounter );
+						}
+						#endif

@@ -45,6 +45,9 @@
 __IO uint8_t DHCP_state;
 #endif
 
+// This is the final real ip address
+uint8_t IP_ADDRESS[4];
+
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 /**
@@ -202,6 +205,10 @@ void dhcp_do(struct netif *netif)
                 sprintf((char*)iptxt, "%d.%d.%d.%d", iptab[3], iptab[2], iptab[1], iptab[0]);
 
                 printf("IP address assigned by a DHCP server: %s\n", iptxt);
+                IP_ADDRESS[0] = iptab[3];
+                IP_ADDRESS[1] = iptab[2];
+                IP_ADDRESS[2] = iptab[1];
+                IP_ADDRESS[3] = iptab[0];
 
                 LED3_On();
 #endif
@@ -228,6 +235,11 @@ void dhcp_do(struct netif *netif)
                     sprintf((char*)iptxt, "%d.%d.%d.%d", IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
                     printf("DHCP timeout !!\n");
                     printf("Static IP address  : %s\n", iptxt);
+
+                    IP_ADDRESS[0] =IP_ADDR0;
+                    IP_ADDRESS[1] =IP_ADDR1;
+                    IP_ADDRESS[2] = IP_ADDR2;
+                    IP_ADDRESS[3] = IP_ADDR3;
 
                     LED4_On();
 #endif
