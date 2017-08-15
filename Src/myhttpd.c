@@ -206,12 +206,12 @@ void http_server_serve(struct netconn *conn)
            DynWebPage(conn);
         }
         // This is the main page file
-        else if((strncmp((char const *)buf, "GET /STM32F4xx.html", 19) == 0)||
+        else if((strncmp((char const *)buf, "GET /index.html", 15) == 0)||
             (strncmp((char const *)buf, "GET / ", 6) == 0))
         {
             printf("Visit root\n");
           /* Load STM32F4x7 page */
-          file = fs_open("/STM32F4xx.html");
+          file = fs_open("/index.html");
           //http_log((const unsigned char*)(file->data), (size_t)file->len);
           netconn_write(conn, (const unsigned char*)(file->data), (size_t)file->len, NETCONN_NOCOPY);
           fs_close(file);
@@ -223,7 +223,7 @@ void http_server_serve(struct netconn *conn)
           file = fs_open("/404.html");
           netconn_write(conn, (const unsigned char*)(file->data), (size_t)file->len, NETCONN_NOCOPY);
           fs_close(file);
-          printf("httpd cant find url\n");
+          printf("httpd cant find url:%s\n", buf);
         }
       }
     }
