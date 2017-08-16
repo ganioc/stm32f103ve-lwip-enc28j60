@@ -142,8 +142,7 @@ static void Netif_Config(void)
     // get static ip address from e2prom
     /* IP address setting */
     IP4_ADDR(&ipaddr, IP_ADDR0, IP_ADDR1, IP_ADDR2, IP_ADDR3);
-    IP4_ADDR(&netmask, NETMASK_ADDR0, NETMASK_ADDR1, NETMASK_ADDR2,
-             NETMASK_ADDR3);
+    IP4_ADDR(&netmask, NETMASK_ADDR0, NETMASK_ADDR1, NETMASK_ADDR2,NETMASK_ADDR3);
     IP4_ADDR(&gw, GW_ADDR0, GW_ADDR1, GW_ADDR2, GW_ADDR3);
 
     /* create a binary semaphore used for informing ethernetif of frame

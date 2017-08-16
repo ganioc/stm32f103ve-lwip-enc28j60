@@ -217,6 +217,56 @@ void http_server_serve(struct netconn *conn)
           fs_close(file);
           //http_log((const unsigned char*)(file->data), (size_t)file->len);
         }
+        else if(strncmp((char const *)buf, "GET /setting.html", 17) == 0)
+        {
+            printf("Visit setting\n");
+          /* Load setting page */
+          file = fs_open("/setting.html");
+          //http_log((const unsigned char*)(file->data), (size_t)file->len);
+          netconn_write(conn, (const unsigned char*)(file->data), (size_t)file->len, NETCONN_NOCOPY);
+          fs_close(file);
+          //http_log((const unsigned char*)(file->data), (size_t)file->len);
+        }
+        else if(strncmp((char const *)buf, "GET /testing.html", 17) == 0)
+        {
+            printf("Visit testing\n");
+          /* Load setting page */
+          file = fs_open("/testing.html");
+          //http_log((const unsigned char*)(file->data), (size_t)file->len);
+          netconn_write(conn, (const unsigned char*)(file->data), (size_t)file->len, NETCONN_NOCOPY);
+          fs_close(file);
+          //http_log((const unsigned char*)(file->data), (size_t)file->len);
+        }
+        else if(strncmp((char const *)buf, "GET /styles.css", 15) == 0)
+        {
+            printf("Visit styles.css\n");
+          /* Load setting page */
+          file = fs_open("/styles.css");
+          //http_log((const unsigned char*)(file->data), (size_t)file->len);
+          netconn_write(conn, (const unsigned char*)(file->data), (size_t)file->len, NETCONN_NOCOPY);
+          fs_close(file);
+          //http_log((const unsigned char*)(file->data), (size_t)file->len);
+        }
+        else if(strncmp((char const *)buf, "GET /logo.svg", 13) == 0)
+        {
+            printf("Visit logo.svg\n");
+          /* Load setting page */
+          file = fs_open("/logo.svg");
+          //http_log((const unsigned char*)(file->data), (size_t)file->len);
+          netconn_write(conn, (const unsigned char*)(file->data), (size_t)file->len, NETCONN_NOCOPY);
+          fs_close(file);
+          //http_log((const unsigned char*)(file->data), (size_t)file->len);
+        }        
+        else if(strncmp((char const *)buf, "GET /main.png", 13) == 0)
+        {
+            printf("Visit main.png\n");
+          /* Load setting page */
+          file = fs_open("/main.png");
+          //http_log((const unsigned char*)(file->data), (size_t)file->len);
+          netconn_write(conn, (const unsigned char*)(file->data), (size_t)file->len, NETCONN_NOCOPY);
+          fs_close(file);
+          //http_log((const unsigned char*)(file->data), (size_t)file->len);
+        }              
         else
         {
           /* Load Error page */
